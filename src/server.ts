@@ -20,7 +20,7 @@ export default class Server {
 
         await db()
 
-        app.use('/dpboss/api', mainRouter)
+        app.use('/api', mainRouter)
 
         app.use(errorHandler)
     }

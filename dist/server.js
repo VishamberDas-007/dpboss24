@@ -29,7 +29,7 @@ class Server {
             app.use((0, express_1.json)());
             app.use((0, cors_1.default)());
             yield (0, db_1.default)();
-            app.use('/dpboss/api', routes_1.mainRouter);
+            app.use('/api', routes_1.mainRouter);
             app.use(errorHandler_1.default);
         });
     }
