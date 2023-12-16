@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ticketRouter = void 0;
+const express_1 = require("express");
+const ticket_controller_1 = require("../controllers/ticket.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const ticketRouter = (0, express_1.Router)();
+exports.ticketRouter = ticketRouter;
+ticketRouter.get('/status', ticket_controller_1.fetchStatusData);
+ticketRouter.post('/insert', auth_middleware_1.isAdmin, ticket_controller_1.insertTicketValue);
