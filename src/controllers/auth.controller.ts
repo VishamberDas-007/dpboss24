@@ -2,7 +2,12 @@ import { Request, Response } from 'express'
 import catchAsync from '../utils/catchAsync'
 import validator from '../validations'
 import { loginValidator } from '../validations/auth.validator'
-import { USER_ID, USER_SECRET } from '../config/const'
+import {
+    SATTA_USER_ID,
+    SATTA_USER_SECRET,
+    USER_ID,
+    USER_SECRET,
+} from '../config/const'
 import AppError from '../utils/AppError'
 import { AUTH_E_0001, AUTH_S_0001 } from '../config/responseCodes/auth'
 import { TAccessToken } from '../types/global.types'
@@ -26,3 +31,23 @@ export const userLogin = catchAsync(async (req: Request, res: Response) => {
 
     return responseHandler(res, AUTH_S_0001, { accessToken })
 })
+
+export const userSattaLogin = catchAsync(
+    async (req: Request, res: Response) => {
+        await validator(loginValidator, req.body)
+
+        const { email, password } = req.body
+
+        if (!(email === SATTA_USER_ID && password === SATTA_USER_SECRET))
+            throw new AppError(AUTH_E_0001)
+
+        const tokenObj: TAccessToken = {
+            email: email,
+            isVerified: true,
+        }
+
+        const accessToken = createAccessToken(tokenObj)
+
+        return responseHandler(res, AUTH_S_0001, { accessToken })
+    }
+)

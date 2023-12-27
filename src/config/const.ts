@@ -21,7 +21,7 @@ export const APP_ENV = getAppEnv()
 dotenv.config({ path: `.env.${APP_ENV.toLocaleLowerCase()}` })
 
 export const PORT = process.env.PORT || 3000
-export const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET'
+export const JWT_SECRET = process.env.JWT_SECRET || 'JHRG^$%#*YGDHD$#%$'
 export const SALT_ROUND = process.env.SALT_ROUND || '10'
 export const JWT_EXP = process.env.JWT_EXP || '1d'
 
@@ -36,3 +36,7 @@ export const DB_URL = process.env.DB_URL || ''
 export const USER_ID = process.env.USER_ID || 'dpboss24.in@gmail.com'
 
 export const USER_SECRET = process.env.USER_SECRET || '(DpBoss)@2023'
+
+export const SATTA_USER_ID = process.env.USER_ID || 'satta.in@gmail.com'
+
+export const SATTA_USER_SECRET = process.env.USER_SECRET || '(Satta#@)@2023'
