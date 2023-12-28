@@ -3,8 +3,11 @@ import { APP_ENV } from '../config/const'
 import { ticketRouter } from './ticket.routes'
 import { authRouter } from './auth.routes'
 import { sattaRouter } from './satta.routes'
+import { videoRouter } from './video.routes'
 
 const mainRouter = Router()
+
+mainRouter.use('/video', videoRouter)
 
 mainRouter.use('/satta', sattaRouter)
 
