@@ -4,10 +4,11 @@ import { ticketRouter } from './ticket.routes'
 import { authRouter } from './auth.routes'
 import { sattaRouter } from './satta.routes'
 import { videoRouter } from './video.routes'
+import { isSattaAdmin } from '../middlewares/sattaAuth.middleware'
 
 const mainRouter = Router()
 
-mainRouter.use('/video', videoRouter)
+mainRouter.use('/video', isSattaAdmin, videoRouter)
 
 mainRouter.use('/satta', sattaRouter)
 
