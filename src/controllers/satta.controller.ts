@@ -7,6 +7,7 @@ import {
     SATTA_S_0001,
     SATTA_S_0002,
     SATTA_E_0001,
+    SATTA_E_0002,
 } from '../config/responseCodes/satta'
 import { insertSattaTicketValueValidator } from '../validations/satta.validator'
 import { getDates } from '../services/ticket'
@@ -19,18 +20,25 @@ export const insertSattaTicketValue = catchAsync(
         const {
             ticketValue,
             createdAt,
-        }: { ticketValue: string; createdAt: string } = req.body
+            schedule,
+        }: { ticketValue: string; schedule: string; createdAt: string } =
+            req.body
 
         const { formatDate1, formatDate2 } = getDates()
 
-        const fetchAllSattaValue = await sattaTicketValue.find({
-            createdAt: { $gte: formatDate1, $lt: formatDate2 },
-        })
+        const fetchAllSattaValue = (
+            await sattaTicketValue.find({
+                createdAt: { $gte: formatDate1, $lt: formatDate2 },
+            })
+        ).map((data) => data.toJSON())
 
         if (fetchAllSattaValue.length === 12) throw new AppError(SATTA_E_0001)
+        else if (fetchAllSattaValue.find((item) => item.schedule === schedule))
+            throw new AppError(SATTA_E_0002)
 
         const result = await sattaTicketValue.create({
             value: ticketValue,
+            schedule,
             createdAt,
         })
 
@@ -52,12 +60,13 @@ export const fetchSattaStatusData = catchAsync(
 
 export const fetchTicketValueTimeBased = catchAsync(
     async (req: Request, res: Response) => {
-        
         const { formatDate1, formatDate2 } = getDates()
 
-        const fetchSattaValueList = await sattaTicketValue.find({
-            createdAt: { $gte: formatDate1, $lt: formatDate2 },
-        })
+        const fetchSattaValueList = (
+            await sattaTicketValue.find({
+                createdAt: { $gte: formatDate1, $lt: formatDate2 },
+            })
+        ).map((data) => ({ ...data.toJSON(), _id: undefined }))
 
         return responseHandler(res, SATTA_S_0002, fetchSattaValueList)
     }
