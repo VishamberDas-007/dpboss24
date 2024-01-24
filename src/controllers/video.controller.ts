@@ -37,7 +37,9 @@ export const insertVideoUrl = catchAsync(
 
 export const fetchVideoList = catchAsync(
     async (req: Request, res: Response) => {
-        const videoList = await video.find()
+        const videoList = await video.find().sort({
+            createdAt: 'desc',
+        })
 
         return responseHandler(res, VIDEO_S_0002, videoList)
     }
@@ -54,7 +56,7 @@ export const deleteVideo = catchAsync(async (req: Request, res: Response) => {
     if (!fetchVideo) throw new AppError(VIDEO_E_0001)
 
     await video.deleteOne({
-        _id: video,
+        _id: videoId,
     })
 
     return responseHandler(res, VIDEO_S_0003)

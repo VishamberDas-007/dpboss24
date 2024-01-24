@@ -11,7 +11,7 @@ export const VIDEO_E_0001 = {
 export const VIDEO_E_0002 = {
     type: RESPONSE_TYPE.ERROR,
     code: 'VIDEO_E_0002',
-    isNotify: false,
+    isNotify: true,
     message: 'Cannot post same video url',
     statusCode: 409,
 }
