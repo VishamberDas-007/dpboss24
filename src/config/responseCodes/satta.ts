@@ -4,8 +4,16 @@ export const SATTA_E_0001 = {
     type: RESPONSE_TYPE.ERROR,
     code: 'SATTA_E_0001',
     isNotify: true,
-    message: 'Your value has been recorded successfully',
-    statusCode: 200,
+    message: 'All the schedules have been recorded',
+    statusCode: 400,
+}
+
+export const SATTA_E_0002 = {
+    type: RESPONSE_TYPE.ERROR,
+    code: 'SATTA_E_0002',
+    isNotify: true,
+    message: 'You have already recorded the value for this schedule',
+    statusCode: 409,
 }
 
 export const SATTA_S_0001 = {
