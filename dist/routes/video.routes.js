@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.videoRouter = void 0;
+const express_1 = require("express");
+const video_controller_1 = require("../controllers/video.controller");
+const sattaAuth_middleware_1 = require("../middlewares/sattaAuth.middleware");
+const videoRouter = (0, express_1.Router)();
+exports.videoRouter = videoRouter;
+videoRouter.post('/insert-url', sattaAuth_middleware_1.isSattaAdmin, video_controller_1.insertVideoUrl);
+videoRouter.get('/list', video_controller_1.fetchVideoList);
+videoRouter.delete('/delete/:videoId', sattaAuth_middleware_1.isSattaAdmin, video_controller_1.deleteVideo);

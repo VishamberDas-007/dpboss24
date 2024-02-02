@@ -5,8 +5,12 @@ const express_1 = require("express");
 const const_1 = require("../config/const");
 const ticket_routes_1 = require("./ticket.routes");
 const auth_routes_1 = require("./auth.routes");
+const satta_routes_1 = require("./satta.routes");
+const video_routes_1 = require("./video.routes");
 const mainRouter = (0, express_1.Router)();
 exports.mainRouter = mainRouter;
+mainRouter.use('/video', video_routes_1.videoRouter);
+mainRouter.use('/satta', satta_routes_1.sattaRouter);
 mainRouter.use('/ticket', ticket_routes_1.ticketRouter);
 mainRouter.use('/auth', auth_routes_1.authRouter);
 mainRouter.get('/test', (req, res) => {
