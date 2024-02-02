@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogin = void 0;
+exports.userSattaLogin = exports.userLogin = void 0;
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const validations_1 = __importDefault(require("../validations"));
 const auth_validator_1 = require("../validations/auth.validator");
@@ -25,6 +25,18 @@ exports.userLogin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     yield (0, validations_1.default)(auth_validator_1.loginValidator, req.body);
     const { email, password } = req.body;
     if (!(email == const_1.USER_ID && password === const_1.USER_SECRET))
+        throw new AppError_1.default(auth_1.AUTH_E_0001);
+    const tokenObj = {
+        email: email,
+        isVerified: true,
+    };
+    const accessToken = (0, helper_1.createAccessToken)(tokenObj);
+    return (0, responseHandler_1.default)(res, auth_1.AUTH_S_0001, { accessToken });
+}));
+exports.userSattaLogin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, validations_1.default)(auth_validator_1.loginValidator, req.body);
+    const { email, password } = req.body;
+    if (!(email === const_1.SATTA_USER_ID && password === const_1.SATTA_USER_SECRET))
         throw new AppError_1.default(auth_1.AUTH_E_0001);
     const tokenObj = {
         email: email,
