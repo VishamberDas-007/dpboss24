@@ -27,6 +27,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const SattaTicketValueSchema = new mongoose_1.Schema({
     value: { type: String, required: true },
     schedule: { type: String, required: true },
+    isDisplayed: { type: Boolean, default: false },
 }, {
     timestamps: true,
     strict: true,

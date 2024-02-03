@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchTicketValueTimeBased = exports.fetchSattaStatusData = exports.insertSattaTicketValue = void 0;
+exports.fetchTicketValueTimeBased = exports.updateDisplayStatus = exports.fetchSattaStatusData = exports.insertSattaTicketValue = void 0;
 const sattaTicketValue_1 = __importDefault(require("../db/models/sattaTicketValue"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const validations_1 = __importDefault(require("../validations"));
@@ -35,16 +35,31 @@ exports.insertSattaTicketValue = (0, catchAsync_1.default)((req, res) => __await
     const result = yield sattaTicketValue_1.default.create({
         value: ticketValue,
         schedule,
-        createdAt,
+        createdAt: new Date(),
     });
     return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0001, result);
 }));
 exports.fetchSattaStatusData = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { formatDate1, formatDate2 } = (0, ticket_1.getDates)();
-    const fetchSattaValueList = yield sattaTicketValue_1.default.find({
+    const fetchSattaValueList = yield sattaTicketValue_1.default
+        .findOne({
         createdAt: { $gte: formatDate1, $lt: formatDate2 },
+        isDisplayed: false,
+    })
+        .sort({
+        createdAt: 'desc',
     });
     return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0002, fetchSattaValueList);
+}));
+exports.updateDisplayStatus = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, validations_1.default)(satta_validator_1.sattaIdValidator, req.params);
+    const { sattaId } = req.params;
+    yield sattaTicketValue_1.default.updateOne({
+        _id: sattaId,
+    }, {
+        isDisplayed: true,
+    });
+    return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0003);
 }));
 exports.fetchTicketValueTimeBased = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { formatDate1, formatDate2 } = (0, ticket_1.getDates)();
