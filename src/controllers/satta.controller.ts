@@ -8,8 +8,12 @@ import {
     SATTA_S_0002,
     SATTA_E_0001,
     SATTA_E_0002,
+    SATTA_S_0003,
 } from '../config/responseCodes/satta'
-import { insertSattaTicketValueValidator } from '../validations/satta.validator'
+import {
+    insertSattaTicketValueValidator,
+    sattaIdValidator,
+} from '../validations/satta.validator'
 import { getDates } from '../services/ticket'
 import AppError from '../utils/AppError'
 
@@ -39,7 +43,7 @@ export const insertSattaTicketValue = catchAsync(
         const result = await sattaTicketValue.create({
             value: ticketValue,
             schedule,
-            createdAt,
+            createdAt: new Date(),
         })
 
         return responseHandler(res, SATTA_S_0001, result)
@@ -50,11 +54,34 @@ export const fetchSattaStatusData = catchAsync(
     async (req: Request, res: Response) => {
         const { formatDate1, formatDate2 } = getDates()
 
-        const fetchSattaValueList = await sattaTicketValue.find({
-            createdAt: { $gte: formatDate1, $lt: formatDate2 },
-        })
+        const fetchSattaValueList = await sattaTicketValue
+            .findOne({
+                createdAt: { $gte: formatDate1, $lt: formatDate2 },
+                isDisplayed: false,
+            })
+            .sort({
+                createdAt: 'desc',
+            })
 
         return responseHandler(res, SATTA_S_0002, fetchSattaValueList)
+    }
+)
+
+export const updateDisplayStatus = catchAsync(
+    async (req: Request, res: Response) => {
+        await validator(sattaIdValidator, req.params)
+        const { sattaId } = req.params
+
+        await sattaTicketValue.updateOne(
+            {
+                _id: sattaId,
+            },
+            {
+                isDisplayed: true,
+            }
+        )
+
+        return responseHandler(res, SATTA_S_0003)
     }
 )
 

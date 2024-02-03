@@ -4,6 +4,7 @@ import {
     fetchSattaStatusData,
     fetchTicketValueTimeBased,
     insertSattaTicketValue,
+    updateDisplayStatus,
 } from '../controllers/satta.controller'
 import { isSattaAdmin } from '../middlewares/sattaAuth.middleware'
 
@@ -13,6 +14,8 @@ sattaRouter.get('/status', fetchSattaStatusData)
 
 sattaRouter.post('/insert', isSattaAdmin, insertSattaTicketValue)
 
-sattaRouter.get('/fetch-data', fetchTicketValueTimeBased)
+sattaRouter.get('/update/display-status/:sattaId', updateDisplayStatus)
+
+sattaRouter.get('/fetch-data', isSattaAdmin, fetchTicketValueTimeBased)
 
 export { sattaRouter }

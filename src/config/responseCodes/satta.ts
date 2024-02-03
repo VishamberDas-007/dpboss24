@@ -28,6 +28,14 @@ export const SATTA_S_0002 = {
     type: RESPONSE_TYPE.SUCCESS,
     code: 'SATTA_S_0002',
     isNotify: true,
-    message: 'Satta value list fetched successfully',
+    message: 'Satta status fetched successfully',
+    statusCode: 200,
+}
+
+export const SATTA_S_0003 = {
+    type: RESPONSE_TYPE.SUCCESS,
+    code: 'SATTA_S_0003',
+    isNotify: true,
+    message: 'Ticket status updated successfully',
     statusCode: 200,
 }
