@@ -52,8 +52,8 @@ exports.fetchSattaStatusData = (0, catchAsync_1.default)((req, res) => __awaiter
     return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0002, fetchSattaValueList);
 }));
 exports.updateDisplayStatus = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, validations_1.default)(satta_validator_1.sattaIdValidator, req.params);
-    const { sattaId } = req.params;
+    yield (0, validations_1.default)(satta_validator_1.sattaIdValidator, req.body);
+    const { sattaId } = req.body;
     yield sattaTicketValue_1.default.updateOne({
         _id: sattaId,
     }, {
