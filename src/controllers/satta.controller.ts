@@ -69,8 +69,8 @@ export const fetchSattaStatusData = catchAsync(
 
 export const updateDisplayStatus = catchAsync(
     async (req: Request, res: Response) => {
-        await validator(sattaIdValidator, req.params)
-        const { sattaId } = req.params
+        await validator(sattaIdValidator, req.body)
+        const { sattaId } = req.body
 
         await sattaTicketValue.updateOne(
             {

@@ -14,7 +14,7 @@ sattaRouter.get('/status', fetchSattaStatusData)
 
 sattaRouter.post('/insert', isSattaAdmin, insertSattaTicketValue)
 
-sattaRouter.get('/update/display-status/:sattaId', updateDisplayStatus)
+sattaRouter.post('/update/display-status', updateDisplayStatus)
 
 sattaRouter.get('/fetch-data', isSattaAdmin, fetchTicketValueTimeBased)
 
