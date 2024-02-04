@@ -9,5 +9,5 @@ const sattaRouter = (0, express_1.Router)();
 exports.sattaRouter = sattaRouter;
 sattaRouter.get('/status', satta_controller_1.fetchSattaStatusData);
 sattaRouter.post('/insert', sattaAuth_middleware_1.isSattaAdmin, satta_controller_1.insertSattaTicketValue);
-sattaRouter.get('/update/display-status/:sattaId', satta_controller_1.updateDisplayStatus);
+sattaRouter.post('/update/display-status', satta_controller_1.updateDisplayStatus);
 sattaRouter.get('/fetch-data', sattaAuth_middleware_1.isSattaAdmin, satta_controller_1.fetchTicketValueTimeBased);
