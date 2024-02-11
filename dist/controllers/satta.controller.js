@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchTicketValueTimeBased = exports.updateDisplayStatus = exports.fetchSattaStatusData = exports.insertSattaTicketValue = void 0;
+exports.fetchAdminTableData = exports.fetchUserTableData = exports.fetchTicketValueTimeBased = exports.updateDisplayStatus = exports.fetchSattaStatusData = exports.insertSattaTicketValue = void 0;
 const sattaTicketValue_1 = __importDefault(require("../db/models/sattaTicketValue"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const validations_1 = __importDefault(require("../validations"));
@@ -67,4 +67,19 @@ exports.fetchTicketValueTimeBased = (0, catchAsync_1.default)((req, res) => __aw
         createdAt: { $gte: formatDate1, $lt: formatDate2 },
     })).map((data) => (Object.assign(Object.assign({}, data.toJSON()), { _id: undefined })));
     return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0002, fetchSattaValueList);
+}));
+exports.fetchUserTableData = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { formatDate1, formatDate2 } = (0, ticket_1.getDates)();
+    const tableData = yield sattaTicketValue_1.default.find({
+        createdAt: { $gte: formatDate1, $lt: formatDate2 },
+        isDisplayed: true,
+    });
+    return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0004, tableData);
+}));
+exports.fetchAdminTableData = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { formatDate1, formatDate2 } = (0, ticket_1.getDates)();
+    const tableData = yield sattaTicketValue_1.default.find({
+        createdAt: { $gte: formatDate1, $lt: formatDate2 },
+    });
+    return (0, responseHandler_1.default)(res, satta_1.SATTA_S_0004, tableData);
 }));

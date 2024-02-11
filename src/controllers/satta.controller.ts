@@ -9,6 +9,7 @@ import {
     SATTA_E_0001,
     SATTA_E_0002,
     SATTA_S_0003,
+    SATTA_S_0004,
 } from '../config/responseCodes/satta'
 import {
     insertSattaTicketValueValidator,
@@ -96,5 +97,28 @@ export const fetchTicketValueTimeBased = catchAsync(
         ).map((data) => ({ ...data.toJSON(), _id: undefined }))
 
         return responseHandler(res, SATTA_S_0002, fetchSattaValueList)
+    }
+)
+
+export const fetchUserTableData = catchAsync(
+    async (req: Request, res: Response) => {
+        const { formatDate1, formatDate2 } = getDates()
+        const tableData = await sattaTicketValue.find({
+            createdAt: { $gte: formatDate1, $lt: formatDate2 },
+            isDisplayed: true,
+        })
+
+        return responseHandler(res, SATTA_S_0004, tableData)
+    }
+)
+
+export const fetchAdminTableData = catchAsync(
+    async (req: Request, res: Response) => {
+        const { formatDate1, formatDate2 } = getDates()
+        const tableData = await sattaTicketValue.find({
+            createdAt: { $gte: formatDate1, $lt: formatDate2 },
+        })
+
+        return responseHandler(res, SATTA_S_0004, tableData)
     }
 )
