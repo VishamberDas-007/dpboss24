@@ -39,3 +39,11 @@ export const SATTA_S_0003 = {
     message: 'Ticket status updated successfully',
     statusCode: 200,
 }
+
+export const SATTA_S_0004 = {
+    type: RESPONSE_TYPE.SUCCESS,
+    code: 'SATTA_S_0004',
+    isNotify: true,
+    message: 'Table data fetched successfully',
+    statusCode: 200,
+}

@@ -11,3 +11,5 @@ sattaRouter.get('/status', satta_controller_1.fetchSattaStatusData);
 sattaRouter.post('/insert', sattaAuth_middleware_1.isSattaAdmin, satta_controller_1.insertSattaTicketValue);
 sattaRouter.post('/update/display-status', satta_controller_1.updateDisplayStatus);
 sattaRouter.get('/fetch-data', sattaAuth_middleware_1.isSattaAdmin, satta_controller_1.fetchTicketValueTimeBased);
+sattaRouter.get('/user/table-data', satta_controller_1.fetchUserTableData);
+sattaRouter.get('/admin/table-data', sattaAuth_middleware_1.isSattaAdmin, satta_controller_1.fetchAdminTableData);
